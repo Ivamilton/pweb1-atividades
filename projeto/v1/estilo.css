@@ -1,0 +1,434 @@
+/* ==========================================================================
+   Estilos Gerais e Temas - Perfil do Estudante (Versão 1)
+   Disciplina: Programação Web I - IFCE Campus Boa Viagem
+   ========================================================================== */
+
+:root {
+    --fonte-principal: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --raio-borda: 10px;
+    --transicao-padrao: all 0.25s ease-in-out;
+}
+
+/* --- Tema Claro --- */
+.tema-claro {
+    --fundo: #f4f6f8;
+    --texto: #1f2937;
+    --texto-secundario: #4b5563;
+    --card-fundo: #ffffff;
+    --card-borda: #e5e7eb;
+    --card-sombra: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --destaque: #0d9488;
+    --destaque-hover: #0f766e;
+    --destaque-fundo: #ccfbf1;
+    --destaque-texto: #115e59;
+    --cabecalho-fundo: #ffffff;
+    --cabecalho-borda: #e5e7eb;
+    --rodape-fundo: #ffffff;
+    --rodape-borda: #e5e7eb;
+    --tag-fundo: #e0f2fe;
+    --tag-texto: #0369a1;
+    --status-404: #dc2626;
+}
+
+/* --- Tema Escuro --- */
+.tema-escuro {
+    --fundo: #0f172a;
+    --texto: #f1f5f9;
+    --texto-secundario: #94a3b8;
+    --card-fundo: #1e293b;
+    --card-borda: #334155;
+    --card-sombra: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --destaque: #14b8a6;
+    --destaque-hover: #2dd4bf;
+    --destaque-fundo: #134e4a;
+    --destaque-texto: #5eead4;
+    --cabecalho-fundo: #1e293b;
+    --cabecalho-borda: #334155;
+    --rodape-fundo: #1e293b;
+    --rodape-borda: #334155;
+    --tag-fundo: #1e3a5f;
+    --tag-texto: #7dd3fc;
+    --status-404: #f87171;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--fundo);
+    color: var(--texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Cabeçalho e Navegação
+   ========================================================================== */
+.cabecalho {
+    background-color: var(--cabecalho-fundo);
+    border-bottom: 1px solid var(--cabecalho-borda);
+    padding: 20px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: var(--transicao-padrao);
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.identificacao h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--destaque);
+    letter-spacing: -0.5px;
+}
+
+.identificacao .subtitulo {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    margin-top: 2px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.menu a {
+    text-decoration: none;
+    color: var(--texto);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: var(--transicao-padrao);
+}
+
+.menu a:hover {
+    background-color: var(--destaque-fundo);
+    color: var(--destaque-texto);
+}
+
+.menu a.ativo {
+    background-color: var(--destaque);
+    color: #ffffff;
+}
+
+.menu a.btn-tema {
+    border: 1px solid var(--destaque);
+    color: var(--destaque);
+    font-weight: 600;
+    background: transparent;
+    margin-left: 6px;
+}
+
+.menu a.btn-tema:hover {
+    background-color: var(--destaque);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   Conteúdo Principal e Cards
+   ========================================================================== */
+.conteudo {
+    flex: 1;
+    padding: 40px 20px;
+}
+
+.card {
+    background-color: var(--card-fundo);
+    border: 1px solid var(--card-borda);
+    border-radius: var(--raio-borda);
+    box-shadow: var(--card-sombra);
+    padding: 30px;
+    transition: var(--transicao-padrao);
+}
+
+.card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+    color: var(--destaque);
+    border-bottom: 2px solid var(--destaque-fundo);
+    padding-bottom: 8px;
+}
+
+/* Apresentação (Início) */
+.destaque-bio {
+    font-size: 1.1rem;
+    color: var(--texto);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.info-item {
+    background-color: var(--fundo);
+    border: 1px solid var(--card-borda);
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.info-item strong {
+    color: var(--destaque);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Habilidades */
+.resumo-habilidades {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+}
+
+.texto-habilidades {
+    background-color: var(--fundo);
+    padding: 12px 16px;
+    border-left: 4px solid var(--destaque);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.skill-tag {
+    background-color: var(--tag-fundo);
+    color: var(--tag-texto);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Lista de Projetos */
+.projetos-secao > p {
+    color: var(--texto-secundario);
+    margin-bottom: 24px;
+}
+
+.projetos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+}
+
+.card-projeto {
+    background-color: var(--fundo);
+    border: 1px solid var(--card-borda);
+    border-radius: 8px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transicao-padrao);
+}
+
+.card-projeto:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-sombra);
+    border-color: var(--destaque);
+}
+
+.card-projeto h3 {
+    font-size: 1.25rem;
+    color: var(--texto);
+    margin-bottom: 10px;
+}
+
+.card-projeto .descricao-curta {
+    font-size: 0.95rem;
+    color: var(--texto-secundario);
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.card-projeto .tecnologias-tag {
+    font-size: 0.85rem;
+    color: var(--destaque-texto);
+    background-color: var(--destaque-fundo);
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.btn-link {
+    display: inline-block;
+    background-color: var(--destaque);
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 6px;
+    text-align: center;
+    transition: var(--transicao-padrao);
+}
+
+.btn-link:hover {
+    background-color: var(--destaque-hover);
+    color: #ffffff;
+}
+
+/* Detalhe do Projeto */
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+.btn-voltar {
+    color: var(--destaque);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transicao-padrao);
+}
+
+.btn-voltar:hover {
+    text-decoration: underline;
+}
+
+.projeto-info-completa {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.bloco-texto h3,
+.bloco-tecnologias h3 {
+    font-size: 1.1rem;
+    color: var(--destaque);
+    margin-bottom: 8px;
+}
+
+.projeto-descricao-detalhada {
+    font-size: 1.05rem;
+    color: var(--texto);
+    line-height: 1.7;
+}
+
+.bloco-tecnologias .tecnologias-tag {
+    display: inline-block;
+    background-color: var(--destaque-fundo);
+    color: var(--destaque-texto);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* 404 - Não encontrado */
+.erro-404 {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.erro-404 .codigo-status {
+    display: block;
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--status-404);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.erro-404 h2 {
+    color: var(--texto);
+    border: none;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.erro-404 p {
+    color: var(--texto-secundario);
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+.rodape {
+    background-color: var(--rodape-fundo);
+    border-top: 1px solid var(--rodape-borda);
+    padding: 24px 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    transition: var(--transicao-padrao);
+}
+
+.container-rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.rodape a.link-api {
+    color: var(--destaque);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transicao-padrao);
+}
+
+.rodape a.link-api:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+@media (max-width: 680px) {
+    .container-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .container-rodape {
+        flex-direction: column;
+        text-align: center;
+    }
+}

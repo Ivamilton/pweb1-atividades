@@ -58,7 +58,7 @@ $pagina = $_GET['pagina'] ?? 'inicio';
     <main class="conteudo container">
         <?php if ($pagina === 'inicio'): ?>
             <section class="card apresentacao">
-                <h2>Apresentação</h2>
+                <h2>Sobre Mim</h2>
                 <p class="destaque-bio"><?= htmlspecialchars($perfil['apresentacao'], ENT_QUOTES, 'UTF-8') ?></p>
                 <div class="info-grid">
                     <div class="info-item">
@@ -73,6 +73,38 @@ $pagina = $_GET['pagina'] ?? 'inicio';
                     <div class="info-item">
                         <strong>Cidade:</strong> <?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?>
                     </div>
+                </div>
+            </section>
+
+        <?php elseif ($pagina === 'habilidades'): ?>
+            <section class="card habilidades">
+                <h2>Minhas Habilidades</h2>
+                <p class="resumo-habilidades">
+                    Atualmente possuo <strong><?= count($perfil['habilidades']) ?></strong> habilidades mapeadas:
+                </p>
+                <p class="texto-habilidades">
+                    <strong>Habilidades em destaque:</strong> <?= htmlspecialchars(implode(', ', $perfil['habilidades']), ENT_QUOTES, 'UTF-8') ?>
+                </p>
+                <div class="skills-grid">
+                    <?php foreach ($perfil['habilidades'] as $hab): ?>
+                        <div class="skill-tag"><?= htmlspecialchars($hab, ENT_QUOTES, 'UTF-8') ?></div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
+        <?php elseif ($pagina === 'projetos'): ?>
+            <section class="card projetos-secao">
+                <h2>Meus Projetos</h2>
+                <p>Confira abaixo os principais projetos desenvolvidos e em andamento:</p>
+                <div class="projetos-grid">
+                    <?php foreach ($projetos as $id => $proj): ?>
+                        <article class="card-projeto">
+                            <h3><?= htmlspecialchars($proj['titulo'], ENT_QUOTES, 'UTF-8') ?></h3>
+                            <p class="descricao-curta"><?= htmlspecialchars($proj['descricao'], ENT_QUOTES, 'UTF-8') ?></p>
+                            <p class="tecnologias-tag"><strong>Tecnologias:</strong> <?= htmlspecialchars($proj['tecnologias'], ENT_QUOTES, 'UTF-8') ?></p>
+                            <a href="?pagina=projeto&id=<?= $id ?>" class="btn-link">Ver detalhes do projeto &rarr;</a>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
             </section>
         <?php endif; ?>

@@ -39,6 +39,16 @@ if (isset($_GET['tema'])) {
     setcookie('tema', $tema, time() + (30 * 24 * 60 * 60));
 }
 
+// 3. Rota JSON (header, json_encode, exit)
+if (isset($_GET['formato']) && $_GET['formato'] === 'json') {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'perfil' => $perfil,
+        'projetos' => $projetos
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 // 4. Qual página mostrar (if/elseif, status 404)
 $pagina = $_GET['pagina'] ?? 'inicio';
 $id_projeto = null;

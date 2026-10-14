@@ -95,6 +95,33 @@ body {
     transition: background var(--transition), color var(--transition);
 }
 
+/* ─── SVG global ─────────────────────────────────────────────────────────── */
+svg {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.btn-link svg,
+.btn-voltar svg,
+.btn-tema svg,
+.link-api svg,
+.hero-tag svg,
+.skill-tag svg,
+.tecnologias-tag svg,
+.codigo-status + h2 svg,
+.icon svg { vertical-align: middle; }
+
+.btn-link { gap: 6px; }
+.btn-voltar { gap: 6px; }
+.btn-tema  { gap: 5px; }
+.link-api  { gap: 5px; }
+.hero-tag  { gap: 5px; }
+.skill-tag { gap: 6px; }
+.tecnologias-tag { gap: 5px; }
+
+.icon { display: inline-flex; align-items: center; justify-content: center; }
+
 .container {
     width: 100%;
     max-width: 1040px;
@@ -571,6 +598,14 @@ a { color: inherit; text-decoration: none; }
 .erro-404 {
     text-align: center;
     padding: 64px 32px;
+}
+
+.icon-404 {
+    display: flex;
+    justify-content: center;
+    color: var(--accent);
+    margin-bottom: 16px;
+    opacity: 0.7;
 }
 
 .codigo-status {

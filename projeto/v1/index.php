@@ -27,6 +27,18 @@ $projetos = [
     ]
 ];
 
+// 2. Tema claro ou escuro (GET, cookie, validação)
+// Prioridade: o que veio na URL; depois, o cookie; por fim, o padrão
+$tema_bruto = $_GET['tema'] ?? $_COOKIE['tema'] ?? 'claro';
+
+// R6. Validação de segurança: apenas 'claro' ou 'escuro'. Qualquer outro valor (ex: scripts) vira 'claro'
+$tema = ($tema_bruto === 'escuro') ? 'escuro' : 'claro';
+
+// Grava o cookie apenas quando o tema vier pela URL (persistência de 30 dias)
+if (isset($_GET['tema'])) {
+    setcookie('tema', $tema, time() + (30 * 24 * 60 * 60));
+}
+
 // 4. Qual página mostrar (if/elseif, status 404)
 $pagina = $_GET['pagina'] ?? 'inicio';
 $id_projeto = null;
@@ -47,6 +59,10 @@ if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos')
     http_response_code(404);
     $mensagem_erro_404 = 'Página não encontrada';
 }
+
+$proximo_tema = ($tema === 'escuro') ? 'claro' : 'escuro';
+$param_pagina = ($pagina === 'projeto' && $id_projeto) ? "pagina=projeto&id={$id_projeto}" : "pagina={$pagina}";
+$link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -56,7 +72,7 @@ if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos')
     <title>Perfil do Estudante - <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="stylesheet" href="estilo.css">
 </head>
-<body class="tema-claro">
+<body class="tema-<?= htmlspecialchars($tema, ENT_QUOTES, 'UTF-8') ?>">
     <!-- 5. Cabeçalho e menu -->
     <header class="cabecalho">
         <div class="container container-header">
@@ -68,6 +84,7 @@ if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos')
                 <a href="?pagina=inicio" class="<?= $pagina === 'inicio' ? 'ativo' : '' ?>">Início</a>
                 <a href="?pagina=habilidades" class="<?= $pagina === 'habilidades' ? 'ativo' : '' ?>">Habilidades</a>
                 <a href="?pagina=projetos" class="<?= $pagina === 'projetos' || $pagina === 'projeto' ? 'ativo' : '' ?>">Projetos</a>
+                <a href="<?= htmlspecialchars($link_troca_tema, ENT_QUOTES, 'UTF-8') ?>" class="btn-tema"><?= $tema === 'escuro' ? '☀️ Modo Claro' : '🌙 Modo Escuro' ?></a>
             </nav>
         </div>
     </header>
@@ -157,8 +174,8 @@ if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos')
     <!-- 7. Rodapé -->
     <footer class="rodape">
         <div class="container container-rodape">
-            <p>Tema atual: <strong>Claro</strong></p>
-            <p><a href="?formato=json">Versão JSON (API)</a></p>
+            <p>Tema atual: <strong><?= $tema === 'escuro' ? 'Escuro' : 'Claro' ?></strong></p>
+            <p><a href="?formato=json" class="link-api" target="_blank">Versão JSON (API)</a></p>
             <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?>. Todos os direitos reservados.</p>
         </div>
     </footer>

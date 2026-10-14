@@ -5,25 +5,39 @@ $perfil = [
     'curso' => 'Tecnologia em Análise e Desenvolvimento de Sistemas',
     'campus' => 'IFCE Campus Boa Viagem',
     'cidade' => 'Boa Viagem - CE',
-    'apresentacao' => 'Estudante de Análise e Desenvolvimento de Sistemas no IFCE Campus Boa Viagem. Apaixonado por desenvolvimento web, programação backend e construção de soluções práticas de software para resolver problemas reais.',
-    'habilidades' => ['PHP', 'HTML5', 'CSS3', 'JavaScript', 'MySQL', 'Git & GitHub']
+    'apresentacao' => 'Desenvolvedor em formação no curso de Análise e Desenvolvimento de Sistemas, com foco na criação de aplicações web modernas, acessíveis e orientadas a problemas reais. Tenho interesse em transformar ideias em produtos digitais funcionais, unindo boas práticas de frontend, backend e organização de projetos.',
+    'habilidades' => [
+        'HTML5',
+        'CSS3',
+        'JavaScript',
+        'React',
+        'PHP',
+        'Python',
+        'PostgreSQL',
+        'Git & GitHub',
+        'Django',
+        'Flask',
+        'FastAPI',
+        'Bootstrap',
+        'APIs REST'
+    ]
 ];
 
 $projetos = [
     1 => [
         'titulo' => 'Leite do Futuro',
-        'descricao' => 'Sistema voltado à modernização e gestão da cadeia produtiva leiteira no semiárido cearense. Permite o controle de ordenha, registro sanitário do rebanho, acompanhamento de custos e análise de produtividade zootécnica.',
-        'tecnologias' => 'PHP, MySQL, HTML5, CSS3, JavaScript'
+        'descricao' => 'Plataforma para modernizar a gestão da cadeia produtiva leiteira no semiárido cearense. Reúne dados de ordenha, sanidade do rebanho, custos e produtividade em uma experiência simples para apoiar decisões no campo.',
+        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
     ],
     2 => [
-        'titulo' => 'Aprende Mais',
-        'descricao' => 'Plataforma web de suporte educacional e reforço pedagógico. Oferece trilhas de aprendizagem personalizadas, simulados interativos e relatórios de desempenho para estudantes e docentes.',
-        'tecnologias' => 'PHP, HTML5, CSS3, JavaScript'
+        'titulo' => 'Aprende Mamis',
+        'descricao' => 'Plataforma educacional pensada para apoiar mães em sua jornada de aprendizagem. Oferece conteúdos organizados, trilhas de estudo, atividades interativas e acompanhamento da evolução de cada estudante.',
+        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
     ],
     3 => [
         'titulo' => 'Plataforma de Estudos para Concursos',
-        'descricao' => 'Projeto individual criado para planejamento e otimização de estudos para concursos públicos. Conta com banco de questões comentadas, simulados cronometrados, controle de ciclo de revisões e estatísticas por disciplina.',
-        'tecnologias' => 'PHP, MySQL, HTML5, CSS3, JavaScript'
+        'descricao' => 'Aplicação para planejar e otimizar a preparação para concursos públicos. Inclui banco de questões, simulados, ciclo de revisões e indicadores de desempenho por disciplina para tornar os estudos mais consistentes.',
+        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
     ]
 ];
 
@@ -80,6 +94,8 @@ $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Estudante - <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body class="tema-<?= htmlspecialchars($tema, ENT_QUOTES, 'UTF-8') ?>">
@@ -100,35 +116,58 @@ $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
     </header>
 
     <!-- 6. Conteúdo da página escolhida -->
+    <?php if ($pagina === 'inicio'): ?>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-inner">
+                    <div class="hero-avatar">🎓</div>
+                    <div class="hero-text">
+                        <h2><?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></h2>
+                        <p class="hero-bio"><?= htmlspecialchars($perfil['apresentacao'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <div class="hero-tags">
+                            <span class="hero-tag">📍 <?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <span class="hero-tag">🏛️ <?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <span class="hero-tag">💻 <?= count($perfil['habilidades']) ?> habilidades</span>
+                            <span class="hero-tag">🚀 <?= count($projetos) ?> projetos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <main class="conteudo container">
         <?php if ($pagina === 'inicio'): ?>
             <section class="card apresentacao">
-                <h2>Sobre Mim</h2>
-                <p class="destaque-bio"><?= htmlspecialchars($perfil['apresentacao'], ENT_QUOTES, 'UTF-8') ?></p>
+                <h2><span class="icon">👤</span> Sobre Mim</h2>
                 <div class="info-grid">
                     <div class="info-item">
-                        <strong>Nome:</strong> <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?>
+                        <strong>Nome</strong>
+                        <span><?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
-                        <strong>Curso:</strong> <?= htmlspecialchars($perfil['curso'], ENT_QUOTES, 'UTF-8') ?>
+                        <strong>Curso</strong>
+                        <span><?= htmlspecialchars($perfil['curso'], ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
-                        <strong>Campus:</strong> <?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?>
+                        <strong>Campus</strong>
+                        <span><?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
-                        <strong>Cidade:</strong> <?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?>
+                        <strong>Cidade</strong>
+                        <span><?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                 </div>
             </section>
 
         <?php elseif ($pagina === 'habilidades'): ?>
             <section class="card habilidades">
-                <h2>Minhas Habilidades</h2>
+                <h2><span class="icon">⚡</span> Minhas Habilidades</h2>
                 <p class="resumo-habilidades">
                     Atualmente possuo <strong><?= count($perfil['habilidades']) ?></strong> habilidades mapeadas:
                 </p>
                 <p class="texto-habilidades">
-                    <strong>Habilidades em destaque:</strong> <?= htmlspecialchars(implode(', ', $perfil['habilidades']), ENT_QUOTES, 'UTF-8') ?>
+                    <strong>Destaque:</strong>&nbsp;<?= htmlspecialchars(implode(' · ', $perfil['habilidades']), ENT_QUOTES, 'UTF-8') ?>
                 </p>
                 <div class="skills-grid">
                     <?php foreach ($perfil['habilidades'] as $hab): ?>
@@ -139,15 +178,16 @@ $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
 
         <?php elseif ($pagina === 'projetos'): ?>
             <section class="card projetos-secao">
-                <h2>Meus Projetos</h2>
+                <h2><span class="icon">🚀</span> Meus Projetos</h2>
                 <p>Confira abaixo os principais projetos desenvolvidos e em andamento:</p>
                 <div class="projetos-grid">
                     <?php foreach ($projetos as $id => $proj): ?>
                         <article class="card-projeto">
+                            <span class="card-projeto-numero">Projeto #<?= $id ?></span>
                             <h3><?= htmlspecialchars($proj['titulo'], ENT_QUOTES, 'UTF-8') ?></h3>
                             <p class="descricao-curta"><?= htmlspecialchars($proj['descricao'], ENT_QUOTES, 'UTF-8') ?></p>
-                            <p class="tecnologias-tag"><strong>Tecnologias:</strong> <?= htmlspecialchars($proj['tecnologias'], ENT_QUOTES, 'UTF-8') ?></p>
-                            <a href="?pagina=projeto&id=<?= $id ?>" class="btn-link">Ver detalhes do projeto &rarr;</a>
+                            <span class="tecnologias-tag"><?= htmlspecialchars($proj['tecnologias'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <a href="?pagina=projeto&id=<?= $id ?>" class="btn-link">Ver detalhes &rarr;</a>
                         </article>
                     <?php endforeach; ?>
                 </div>

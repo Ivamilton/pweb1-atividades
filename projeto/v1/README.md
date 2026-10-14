@@ -30,9 +30,9 @@ O roteamento da aplicação é centralizado no arquivo `index.php`, sendo gerenc
 | :--- | :--- | :--- | :--- |
 | `GET` | `/` ou `/?pagina=inicio` | Apresentação pessoal com dados biográficos, curso, campus e cidade do estudante. | `200 OK` |
 | `GET` | `/?pagina=habilidades` | Listagem das habilidades técnicas, exibindo a contagem com `count()` e a relação com `implode()`. | `200 OK` |
-| `GET` | `/?pagina=projetos` | Catálogo de projetos desenvolvidos (Leite do Futuro, Aprende Mais e Estudos para Concursos) com links para detalhes. | `200 OK` |
+| `GET` | `/?pagina=projetos` | Catálogo de projetos desenvolvidos (Leite do Futuro, Aprende Mamis e Estudos para Concursos) com links para detalhes. | `200 OK` |
 | `GET` | `/?pagina=projeto&id=1` | Visão detalhada do projeto 1 (*Leite do Futuro*), contendo descrição aprofundada e tecnologias. | `200 OK` |
-| `GET` | `/?pagina=projeto&id=2` | Visão detalhada do projeto 2 (*Aprende Mais*). | `200 OK` |
+| `GET` | `/?pagina=projeto&id=2` | Visão detalhada do projeto 2 (*Aprende Mamis*). | `200 OK` |
 | `GET` | `/?pagina=projeto&id=3` | Visão detalhada do projeto 3 (*Plataforma de Estudos para Concursos*). | `200 OK` |
 | `GET` | `/?pagina=projeto&id=99` | Resposta para projeto com ID inexistente. Exibe a mensagem "Projeto não encontrado". | `404 Not Found` |
 | `GET` | `/?pagina=qualquercoisa` | Resposta para qualquer rota inexistente. Exibe a mensagem "Página não encontrada". | `404 Not Found` |
@@ -216,31 +216,38 @@ Content-Type: application/json; charset=utf-8
         "curso": "Tecnologia em Análise e Desenvolvimento de Sistemas",
         "campus": "IFCE Campus Boa Viagem",
         "cidade": "Boa Viagem - CE",
-        "apresentacao": "Estudante de Análise e Desenvolvimento de Sistemas no IFCE Campus Boa Viagem. Apaixonado por desenvolvimento web, programação backend e construção de soluções práticas de software para resolver problemas reais.",
+        "apresentacao": "Desenvolvedor em formação no curso de Análise e Desenvolvimento de Sistemas, com foco na criação de aplicações web modernas, acessíveis e orientadas a problemas reais. Tenho interesse em transformar ideias em produtos digitais funcionais, unindo boas práticas de frontend, backend e organização de projetos.",
         "habilidades": [
-            "PHP",
             "HTML5",
             "CSS3",
             "JavaScript",
-            "MySQL",
-            "Git & GitHub"
+            "React",
+            "PHP",
+            "Python",
+            "PostgreSQL",
+            "Git & GitHub",
+            "Django",
+            "Flask",
+            "FastAPI",
+            "Bootstrap",
+            "APIs REST"
         ]
     },
     "projetos": {
         "1": {
             "titulo": "Leite do Futuro",
-            "descricao": "Sistema voltado à modernização e gestão da cadeia produtiva leiteira no semiárido cearense. Permite o controle de ordenha, registro sanitário do rebanho, acompanhamento de custos e análise de produtividade zootécnica.",
-            "tecnologias": "PHP, MySQL, HTML5, CSS3, JavaScript"
+            "descricao": "Plataforma para modernizar a gestão da cadeia produtiva leiteira no semiárido cearense. Reúne dados de ordenha, sanidade do rebanho, custos e produtividade em uma experiência simples para apoiar decisões no campo.",
+            "tecnologias": "React, Python, APIs REST, PostgreSQL"
         },
         "2": {
-            "titulo": "Aprende Mais",
-            "descricao": "Plataforma web de suporte educacional e reforço pedagógico. Oferece trilhas de aprendizagem personalizadas, simulados interativos e relatórios de desempenho para estudantes e docentes.",
-            "tecnologias": "PHP, HTML5, CSS3, JavaScript"
+            "titulo": "Aprende Mamis",
+            "descricao": "Plataforma educacional pensada para apoiar mães em sua jornada de aprendizagem. Oferece conteúdos organizados, trilhas de estudo, atividades interativas e acompanhamento da evolução de cada estudante.",
+            "tecnologias": "React, Python, APIs REST, PostgreSQL"
         },
         "3": {
             "titulo": "Plataforma de Estudos para Concursos",
-            "descricao": "Projeto individual criado para planejamento e otimização de estudos para concursos públicos. Conta com banco de questões comentadas, simulados cronometrados, controle de ciclo de revisões e estatísticas por disciplina.",
-            "tecnologias": "PHP, MySQL, HTML5, CSS3, JavaScript"
+            "descricao": "Aplicação para planejar e otimizar a preparação para concursos públicos. Inclui banco de questões, simulados, ciclo de revisões e indicadores de desempenho por disciplina para tornar os estudos mais consistentes.",
+            "tecnologias": "React, Python, APIs REST, PostgreSQL"
         }
     }
 }
@@ -337,4 +344,4 @@ Ao concentrar toda a lógica no início do arquivo (definição de cookies, deci
 
 ### 5.3. O que foi mais desafiador e decisões tomadas
 - **Roteamento de múltiplas entidades em arquivo único:** Manter a elegância e legibilidade sem recorrer a frameworks exigiu organizar o fluxo em blocos bem delineados: identificação dos parâmetros, validação, definição de código de status 404 e, por fim, renderização condicional usando a sintaxe de dois-pontos (`if (...) : ... endif;`).
-- **Personalização dos projetos:** A inclusão de projetos reais e relevantes para a formação do estudante — **Leite do Futuro** (solução agropecuária voltada ao semiárido), **Aprende Mais** (plataforma educacional) e o projeto individual de **Estudos para Concursos** — confere autenticidade ao portfólio acadêmico, atendendo aos requisitos práticos da avaliação.
+- **Personalização dos projetos:** A inclusão de projetos reais e relevantes para a formação do estudante — **Leite do Futuro** (solução agropecuária voltada ao semiárido), **Aprende Mamis** (plataforma educacional) e o projeto individual de **Estudos para Concursos** — confere autenticidade ao portfólio acadêmico, atendendo aos requisitos práticos da avaliação. Os três projetos utilizam React e Python.

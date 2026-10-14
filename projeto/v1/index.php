@@ -29,6 +29,24 @@ $projetos = [
 
 // 4. Qual página mostrar (if/elseif, status 404)
 $pagina = $_GET['pagina'] ?? 'inicio';
+$id_projeto = null;
+$projeto_encontrado = null;
+$mensagem_erro_404 = null;
+
+if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos') {
+    // Rotas principais válidas
+} elseif ($pagina === 'projeto') {
+    $id_projeto = (int)($_GET['id'] ?? 0);
+    if (isset($projetos[$id_projeto])) {
+        $projeto_encontrado = $projetos[$id_projeto];
+    } else {
+        http_response_code(404);
+        $mensagem_erro_404 = 'Projeto não encontrado';
+    }
+} else {
+    http_response_code(404);
+    $mensagem_erro_404 = 'Página não encontrada';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -106,6 +124,32 @@ $pagina = $_GET['pagina'] ?? 'inicio';
                         </article>
                     <?php endforeach; ?>
                 </div>
+            </section>
+
+        <?php elseif ($pagina === 'projeto' && $projeto_encontrado !== null): ?>
+            <article class="card projeto-detalhe">
+                <div class="breadcrumb">
+                    <a href="?pagina=projetos" class="btn-voltar">&larr; Voltar para a lista de projetos</a>
+                </div>
+                <h2><?= htmlspecialchars($projeto_encontrado['titulo'], ENT_QUOTES, 'UTF-8') ?></h2>
+                <div class="projeto-info-completa">
+                    <div class="bloco-texto">
+                        <h3>Descrição do Projeto</h3>
+                        <p class="projeto-descricao-detalhada"><?= htmlspecialchars($projeto_encontrado['descricao'], ENT_QUOTES, 'UTF-8') ?></p>
+                    </div>
+                    <div class="bloco-tecnologias">
+                        <h3>Tecnologias Empregadas</h3>
+                        <p class="tecnologias-tag"><?= htmlspecialchars($projeto_encontrado['tecnologias'], ENT_QUOTES, 'UTF-8') ?></p>
+                    </div>
+                </div>
+            </article>
+
+        <?php elseif ($mensagem_erro_404 !== null): ?>
+            <section class="card erro-404">
+                <span class="codigo-status">404</span>
+                <h2><?= htmlspecialchars($mensagem_erro_404, ENT_QUOTES, 'UTF-8') ?></h2>
+                <p>O endereço ou recurso informado não foi localizado no servidor.</p>
+                <a href="?pagina=inicio" class="btn-link">&larr; Retornar à Página Inicial</a>
             </section>
         <?php endif; ?>
     </main>

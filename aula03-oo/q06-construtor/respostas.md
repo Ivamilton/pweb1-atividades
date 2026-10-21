@@ -1,78 +1,31 @@
 # Questão 06: Construtor
 
-**Nível:** 🟡 Intermediário
+## 1. Análise
+```php
+public function __construct(string $nome, float $preco, int $quantidade = 1)
+{
+    $this->nome = $nome;
+    $this->preco = $preco;
+    $this->quantidade = $quantidade;
+}
+```
+O construtor inicializa o objeto. `= 1` torna a quantidade opcional e usa uma unidade quando omitida.
 
-## Arquivos desta questão
-
-| Arquivo | O que é |
-|---|---|
-| `produto.php` | O Produto da aula. Você acrescenta o construtor |
-| `teste-erros.php` | Fornecido: três criações erradas, uma de cada vez |
-
-## 1. Análise do código
-
-**1.1 Cole o seu construtor e explique cada linha.**
-
-_(responda aqui)_
-
-**1.2 Explique o `= 1` no parâmetro `$quantidade`.**
-
-_(responda aqui)_
-
-## 2. Saídas do terminal
-
-> Copie do terminal e cole entre as linhas de três crases. Depois explique com suas palavras.
-
-**2.1 Saída de**: `php q06-construtor/produto.php`
-
+## 2. Saídas
 ```text
-(cole aqui a saída do terminal)
+Produto: Notebook
+Preço unitário: R$ 3.500,00
+Quantidade: 3
+Total: R$ 10.500,00
+Produto: Mouse
+Preço unitário: R$ 59,90
+Quantidade: 10
+Total: R$ 599,00
+Produto: Monitor
+Preço unitário: R$ 899,00
+Quantidade: 1
+Total: R$ 899,00
+Total do pedido: R$ 11.998,00
 ```
 
-**Explicação:**
-
-_(responda aqui)_
-
-**2.2 Erro com `new Produto('Teclado')`**: `php q06-construtor/teste-erros.php`
-
-```text
-(cole aqui a saída do terminal)
-```
-
-**Explicação:**
-
-_(responda aqui)_
-
-**2.3 Erro com `new Produto('Teclado', 'cem reais', 2)`**
-
-```text
-(cole aqui a saída do terminal)
-```
-
-**Explicação:**
-
-_(responda aqui)_
-
-**2.4 Erro com `new Produto()`**
-
-```text
-(cole aqui a saída do terminal)
-```
-
-**Explicação:**
-
-_(responda aqui)_
-
-## 3. Perguntas
-
-**a) A mensagem diz "at least 2 expected", e não "exactly 3". Por quê?**
-
-_(responda aqui)_
-
-**b) Quem devolve o objeto pronto: o `__construct` ou o `new`?**
-
-_(responda aqui)_
-
-**c) Que erro da versão anterior (sem construtor) deixou de ser possível?**
-
-_(responda aqui)_
+`new Produto('Teclado')` dá `ArgumentCountError` por faltar preço; `'cem reais'` dá `TypeError` no parâmetro float; `new Produto()` dá `ArgumentCountError` por faltar nome e preço. A mensagem diz "at least 2" porque quantidade tem padrão. `new` devolve o objeto e `__construct` apenas o inicializa. A versão anterior permitia objeto sem dados obrigatórios.

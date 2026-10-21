@@ -1,15 +1,15 @@
-# Quest?o 08: Desafio: a turma na web
+# Questão 08: Desafio: a turma na web
 
-## 1. An?lise
-`Aluno` possui atributos privados `nome`, `nota1`, `nota2`, construtor, `getNome`, `calcularMedia` e `situacao`. `Disciplina` possui `nome` e `alunos` privados, construtor, getters, `adicionarAluno(Aluno $aluno)`, `calcularMediaTurma` e `contarAprovados`. O tipo `Aluno` exige um objeto dessa classe, n?o uma string.
+## 1. Análise
+`Aluno` possui atributos privados `nome`, `nota1`, `nota2`, construtor, `getNome`, `calcularMedia` e `situacao`. `Disciplina` possui `nome` e `alunos` privados, construtor, getters, `adicionarAluno(Aluno $aluno)`, `calcularMediaTurma` e `contarAprovados`. O tipo `Aluno` exige um objeto dessa classe, não uma string.
 
-## 2. Sa?das
-A p?gina exibe os quatro alunos em tabela e:
+## 2. Saídas
+A página exibe os quatro alunos em tabela e:
 ```text
-M?dia da turma: 6,00
+Média da turma: 6,00
 Aprovados: 2 de 4
 ```
-Com `?teste=1`, exibe `Nota inv?lida para Teste: use valores de 0 a 10.` no topo. O log registra duas requisi??es GET separadas, ambas com status 200. Passar `'Eduardo'` para `adicionarAluno` causa `TypeError` porque o m?todo exige `Aluno`.
+Com `?teste=1`, exibe `Nota inválida para Teste: use valores de 0 a 10.` no topo. O log registra duas requisições GET separadas, ambas com status 200. Passar `'Eduardo'` para `adicionarAluno` causa `TypeError` porque o método exige `Aluno`.
 
 ## 3. Perguntas
-Os objetos s?o recriados a cada requisi??o; n?o permanecem automaticamente entre requests. A checagem de lista vazia evita divis?o por zero e devolve m?dia 0 quando n?o h? alunos.
+Os objetos são recriados a cada requisição; não permanecem automaticamente entre requests. A checagem de lista vazia evita divisão por zero e devolve média 0 quando não há alunos.

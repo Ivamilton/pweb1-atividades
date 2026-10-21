@@ -1,72 +1,40 @@
 # Questão 02: Lendo erros de objetos
 
-**Nível:** 🟢 Básico
-
-## Arquivos desta questão
-
-| Arquivo | O que é |
-|---|---|
-| `erros.php` | Fornecido com quatro erros. Corrija um de cada vez |
-
 ## 1. Análise do código
 
-**1.1 Preencha a tabela, na ordem em que os erros apareceram:**
-
-| Rodada | Linha | Tipo da mensagem (Warning ou Fatal error) | O que estava errado | Como corrigiu |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
+| Rodada | Erro | Correção |
+|---|---|---|
+| 1 | `$aluno->$nome`: variável inexistente e propriedade dinâmica vazia | `$aluno->nome` |
+| 2 | string `'3'` em propriedade `int` | inteiro `3` |
+| 3 | `curso` não inicializado | `$aluno->curso = 'ADS'` |
+| 4 | `$nome` inexistente dentro do método | `$this->nome` |
 
 ## 2. Saídas do terminal
 
-> Copie do terminal e cole entre as linhas de três crases. Depois explique com suas palavras.
-
-**2.1 Rodada 1**: `php q02-lendo-erros/erros.php`
+As mensagens completas variam conforme a versão do PHP, mas as mensagens centrais foram:
 
 ```text
-(cole aqui a saída do terminal)
+Warning: Undefined variable $nome
+Fatal error: Uncaught Error: Cannot access empty property
 ```
-
-**2.2 Rodada 2**
 
 ```text
-(cole aqui a saída do terminal)
+Fatal error: Uncaught TypeError: Cannot assign string to property Aluno::$semestre of type int
 ```
-
-**2.3 Rodada 3**
 
 ```text
-(cole aqui a saída do terminal)
+Fatal error: Uncaught Error: Typed property Aluno::$curso must not be accessed before initialization
 ```
-
-**2.4 Rodada 4**
 
 ```text
-(cole aqui a saída do terminal)
+Warning: Undefined variable $nome
+Sou , do 3º semestre.
 ```
 
-**2.5 Execução final, sem erros**
-
+Execução final:
 ```text
-(cole aqui a saída do terminal)
+Curso: ADS
+Sou Carla, do 3º semestre.
 ```
 
-**Explicação:**
-
-_(responda aqui)_
-
-## 3. Perguntas
-
-**a) Na rodada 1 apareceram duas mensagens. Qual delas parou o programa? Qual a diferença entre `Warning` e `Fatal error`?**
-
-_(responda aqui)_
-
-**b) Por que o erro do `$curso` só aparece na linha do `echo`, e não na linha do `new Aluno()`?**
-
-_(responda aqui)_
-
-**c) Dentro do método, por que é preciso escrever `$this->nome`, e não só `$nome`?**
-
-_(responda aqui)_
+**3.** O fatal error interrompe o programa; warning é aviso que normalmente permite continuar. `new Aluno()` não lê `curso`; o erro surge no `echo`. `$this->nome` acessa a propriedade do objeto, enquanto `$nome` seria variável local.

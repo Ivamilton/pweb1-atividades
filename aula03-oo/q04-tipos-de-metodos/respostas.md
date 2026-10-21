@@ -1,69 +1,31 @@
 # Questão 04: Tipos de métodos
 
-**Nível:** 🟡 Intermediário
+## 1. Análise
 
-## Arquivos desta questão
-
-| Arquivo | O que é |
-|---|---|
-| `termostato.php` | Fornecido. Você acrescenta dois métodos no item 4 |
-
-## 1. Análise do código
-
-**1.1 ANTES de executar, classifique os métodos:**
-
-| Método | Tipo de retorno | Recebe parâmetro? | Altera o objeto? | Tipo do método |
+| Método | Retorno | Parâmetro | Altera | Tipo |
 |---|---|---|---|---|
-| `getTemperatura()` | | | | |
-| `definirAlvo()` | | | | |
-| `resfriar()` | | | | |
-| `precisaResfriar()` | | | | |
-| `mostrarStatus()` | | | | |
+| getTemperatura | float | não | não | consulta |
+| definirAlvo | void | float | sim | modificador |
+| resfriar | void | float | sim | ação/modificador |
+| precisaResfriar | bool | não | não | consulta |
+| mostrarStatus | void | não | não | ação |
 
-**1.2 ANTES de executar, escreva as 5 linhas que você espera ver na saída:**
-
-```text
-(sua previsão)
+Previsão: as cinco linhas originais são exatamente as saídas abaixo. Métodos novos:
+```php
+public function aquecer(float $graus): void { $this->temperatura += $graus; }
+public function diferencaParaAlvo(): float { return $this->temperatura - $this->alvo; }
 ```
 
-**1.3 Cole os dois métodos novos (`aquecer` e `diferencaParaAlvo`) e classifique cada um.**
-
-_(responda aqui)_
-
-## 2. Saídas do terminal
-
-> Copie do terminal e cole entre as linhas de três crases. Depois explique com suas palavras.
-
-**2.1 Saída do código original**: `php q04-tipos-de-metodos/termostato.php`
-
+## 2. Saídas
 ```text
-(cole aqui a saída do terminal)
+Laboratório 1: 25 °C (alvo 22 °C) - resfriando
+Laboratório 1: 23 °C (alvo 22 °C) - resfriando
+Laboratório 1: 23 °C (alvo 24 °C) - ok
+33
+bool(false)
+Laboratório 1: 28 °C (alvo 24 °C) - resfriando
+Diferença para o alvo: 4 °C
 ```
-
-**Explicação:**
-
-_(responda aqui)_
-
-**2.2 Saída com os métodos novos**
-
-```text
-(cole aqui a saída do terminal)
-```
-
-**Explicação:**
-
-_(responda aqui)_
 
 ## 3. Perguntas
-
-**a) Sua previsão do item 1.2 acertou todas as linhas? Explique cada diferença.**
-
-_(responda aqui)_
-
-**b) Por que `echo $sala->getTemperatura() + 10` funciona, mas `$sala->mostrarStatus() + 10` não faria sentido?**
-
-_(responda aqui)_
-
-**c) Qual método chama outro método do mesmo objeto?**
-
-_(responda aqui)_
+`getTemperatura()` pode ser somado porque retorna número; `mostrarStatus()` é `void`. O método que chama outro método é `mostrarStatus()`, que chama `precisaResfriar()`. A previsão original acertou; as duas últimas linhas são do aquecimento e da diferença.

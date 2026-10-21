@@ -1,17 +1,17 @@
-# Questão 02: Lendo erros de objetos
+# Quest?o 02: Lendo erros de objetos
 
-## 1. Análise do código
+## 1. An?lise do c?digo
 
-| Rodada | Erro | Correção |
+| Rodada | Erro | Corre??o |
 |---|---|---|
-| 1 | `$aluno->$nome`: variável inexistente e propriedade dinâmica vazia | `$aluno->nome` |
+| 1 | `$aluno->$nome`: vari?vel inexistente e propriedade din?mica vazia | `$aluno->nome` |
 | 2 | string `'3'` em propriedade `int` | inteiro `3` |
-| 3 | `curso` não inicializado | `$aluno->curso = 'ADS'` |
-| 4 | `$nome` inexistente dentro do método | `$this->nome` |
+| 3 | `curso` n?o inicializado | `$aluno->curso = 'ADS'` |
+| 4 | `$nome` inexistente dentro do m?todo | `$this->nome` |
 
-## 2. Saídas do terminal
+## 2. Sa?das do terminal
 
-As mensagens completas variam conforme a versão do PHP, mas as mensagens centrais foram:
+As mensagens completas variam conforme a vers?o do PHP, mas as mensagens centrais foram:
 
 ```text
 Warning: Undefined variable $nome
@@ -28,13 +28,13 @@ Fatal error: Uncaught Error: Typed property Aluno::$curso must not be accessed b
 
 ```text
 Warning: Undefined variable $nome
-Sou , do 3º semestre.
+Sou , do 3? semestre.
 ```
 
-Execução final:
+Execu??o final:
 ```text
 Curso: ADS
-Sou Carla, do 3º semestre.
+Sou Carla, do 3? semestre.
 ```
 
-**3.** O fatal error interrompe o programa; warning é aviso que normalmente permite continuar. `new Aluno()` não lê `curso`; o erro surge no `echo`. `$this->nome` acessa a propriedade do objeto, enquanto `$nome` seria variável local.
+**3.** O fatal error interrompe o programa; warning ? aviso que normalmente permite continuar. `new Aluno()` n?o l? `curso`; o erro surge no `echo`. `$this->nome` acessa a propriedade do objeto, enquanto `$nome` seria vari?vel local.

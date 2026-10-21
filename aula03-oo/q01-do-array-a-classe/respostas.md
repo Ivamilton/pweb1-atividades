@@ -1,12 +1,12 @@
-# Quest?o 01: Do array ? classe
+# Questão 01: Do array à classe
 
-## 1. An?lise do c?digo
+## 1. Análise do código
 
-**1.1** Em `public float $preco`, `public` ? a visibilidade, `float` ? o tipo e `$preco` ? o nome da propriedade. A propriedade ? p?blica e aceita n?meros decimais.
+**1.1** Em `public float $preco`, `public` é a visibilidade, `float` é o tipo e `$preco` é o nome da propriedade. A propriedade é pública e aceita números decimais.
 
-**1.2** O array usa `$livro['titulo']`; o objeto usa `$livro1->titulo`. A classe permite declarar tipos e o PHP verifica se os valores s?o compat?veis.
+**1.2** O array usa `$livro['titulo']`; o objeto usa `$livro1->titulo`. A classe permite declarar tipos e o PHP verifica se os valores são compatíveis.
 
-## 2. Sa?das do terminal
+## 2. Saídas do terminal
 
 **2.1**
 ```text
@@ -25,8 +25,8 @@ object(Livro)#2 (5) {
 
 ## 3. Perguntas
 
-**a)** H? uma classe (`Livro`) e dois objetos (`$livro1` e `$livro2`).
+**a)** Há uma classe (`Livro`) e dois objetos (`$livro1` e `$livro2`).
 
 **b)** `object(Livro)#2` identifica o tipo e o identificador interno do objeto; `(5)` indica suas cinco propriedades.
 
-**c)** `strict_types` mant?m a verifica??o rigorosa e impede a convers?o silenciosa da string para inteiro.
+**c)** `strict_types` mantém a verificação rigorosa e impede a conversão silenciosa da string para inteiro.

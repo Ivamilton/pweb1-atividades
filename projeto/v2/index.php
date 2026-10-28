@@ -185,10 +185,7 @@ $perfil->adicionarProjeto(new Projeto(
     'React, Python, APIs REST, PostgreSQL'
 ));
 
-// Compatibilidade temporária para $projetos enquanto o HTML/404 não são refatorados nos próximos passos
-$projetos = $perfil->getProjetos();
-
-// 2. Tema claro ou escuro (GET, cookie, validação)
+// 3. Tema claro ou escuro (GET, cookie, validação)
 // Prioridade: o que veio na URL; depois, o cookie; por fim, o padrão
 $tema_bruto = $_GET['tema'] ?? $_COOKIE['tema'] ?? 'claro';
 
@@ -200,40 +197,45 @@ if (isset($_GET['tema'])) {
     setcookie('tema', $tema, time() + (30 * 24 * 60 * 60));
 }
 
-// 3. Rota JSON (header, json_encode, exit)
+// 4. Rota JSON (header, json_encode, exit)
 if (isset($_GET['formato']) && $_GET['formato'] === 'json') {
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'perfil' => $perfil,
-        'projetos' => $projetos
+        'projetos' => $perfil->getProjetos()
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-// 4. Qual página mostrar (if/elseif, status 404)
+// 5. Qual página mostrar (getProjeto com try/catch, status 404)
 $pagina = $_GET['pagina'] ?? 'inicio';
-$id_projeto = null;
+$id = (int)($_GET['id'] ?? 0);
 $projetoAtual = null;
-$mensagem_erro_404 = null;
+$titulo = 'Início';
 
-if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos') {
-    // Rotas principais válidas
+if ($pagina === 'inicio') {
+    $titulo = 'Início';
+} elseif ($pagina === 'habilidades') {
+    $titulo = 'Habilidades';
+} elseif ($pagina === 'projetos') {
+    $titulo = 'Projetos';
 } elseif ($pagina === 'projeto') {
-    $id_projeto = (int)($_GET['id'] ?? 0);
-    $projetos = $perfil->getProjetos();
-    if (isset($projetos[$id_projeto])) {
-        $projetoAtual = $projetos[$id_projeto];
-    } else {
+    try {
+        $projetoAtual = $perfil->getProjeto($id);
+        $titulo = $projetoAtual->getTitulo();
+    } catch (Exception $e) {
         http_response_code(404);
-        $mensagem_erro_404 = 'Projeto não encontrado';
+        $pagina = 'nao-encontrado';
+        $titulo = $e->getMessage();
     }
 } else {
     http_response_code(404);
-    $mensagem_erro_404 = 'Página não encontrada';
+    $pagina = 'nao-encontrado';
+    $titulo = 'Página não encontrada';
 }
 
 $proximo_tema = ($tema === 'escuro') ? 'claro' : 'escuro';
-$param_pagina = ($pagina === 'projeto' && $id_projeto) ? "pagina=projeto&id={$id_projeto}" : "pagina={$pagina}";
+$param_pagina = ($pagina === 'projeto' && $id) ? "pagina=projeto&id={$id}" : "pagina={$pagina}";
 $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
 ?>
 <!DOCTYPE html>
@@ -241,7 +243,7 @@ $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Estudante - <?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></title>
+    <title><?= htmlspecialchars($titulo, ENT_QUOTES, 'UTF-8') ?> - <?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="estilo.css">
@@ -382,11 +384,11 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
                 </div>
             </article>
 
-        <?php elseif ($mensagem_erro_404 !== null): ?>
+        <?php elseif ($pagina === 'nao-encontrado'): ?>
             <section class="card erro-404">
                 <div class="icon-404"><?= $ico_search_x ?></div>
                 <span class="codigo-status">404</span>
-                <h2><?= htmlspecialchars($mensagem_erro_404, ENT_QUOTES, 'UTF-8') ?></h2>
+                <h2><?= htmlspecialchars($titulo, ENT_QUOTES, 'UTF-8') ?></h2>
                 <p>O endereço ou recurso informado não foi localizado no servidor.</p>
                 <a href="?pagina=inicio" class="btn-link"><?= $ico_home ?> Página Inicial</a>
             </section>

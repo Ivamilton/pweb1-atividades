@@ -13,6 +13,7 @@ Repositorio de atividades da disciplina, organizado por aula e por questao.
 | Versao | Pasta | Tema |
 |---|---|---|
 | v1 | [projeto/v1](projeto/v1/) | Perfil do Estudante (PHP, HTTP, Temas e API JSON) |
+| v2 | [projeto/v2](projeto/v2/) | Perfil do Estudante com classes, validações e API JSON |
 
 Cada questao possui o codigo executado e um `respostas.md` com a analise, as saidas e as respostas das perguntas. O projeto possui seu proprio `README.md` detalhado.
 
@@ -21,3 +22,4 @@ Cada questao possui o codigo executado e um `respostas.md` com a analise, as sai
 Entre na pasta da aula ou do projeto e siga as instrucoes correspondentes:
 - Aula 02: [README da Aula 02](aula02-php-http/README.md)
 - Projeto Integrador v1: [README do Projeto v1](projeto/v1/README.md)
+- Projeto Integrador v2: [README do Projeto v2](projeto/v2/README.md)

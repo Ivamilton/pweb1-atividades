@@ -197,13 +197,10 @@ if (isset($_GET['tema'])) {
     setcookie('tema', $tema, time() + (30 * 24 * 60 * 60));
 }
 
-// 4. Rota JSON (header, json_encode, exit)
+// 4. Rota JSON ($perfil->paraArray())
 if (isset($_GET['formato']) && $_GET['formato'] === 'json') {
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([
-        'perfil' => $perfil,
-        'projetos' => $perfil->getProjetos()
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    echo json_encode($perfil->paraArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
 }
 

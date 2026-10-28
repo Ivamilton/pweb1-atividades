@@ -42,14 +42,115 @@ class Projeto
     }
 }
 
-// 2. Dados do perfil (arrays)
-$perfil = [
-    'nome' => 'Ivamilton Júnior',
-    'curso' => 'Tecnologia em Análise e Desenvolvimento de Sistemas',
-    'campus' => 'IFCE Campus Boa Viagem',
-    'cidade' => 'Boa Viagem - CE',
-    'apresentacao' => 'Desenvolvedor em formação no curso de Análise e Desenvolvimento de Sistemas, com foco na criação de aplicações web modernas, acessíveis e orientadas a problemas reais. Tenho interesse em transformar ideias em produtos digitais funcionais, unindo boas práticas de frontend, backend e organização de projetos.',
-    'habilidades' => [
+class Perfil
+{
+    private string $nome;
+    private string $curso;
+    private string $campus;
+    private string $cidade;
+    private string $apresentacao;
+    private array $habilidades;
+    private array $projetos = [];
+
+    public function __construct(
+        string $nome,
+        string $curso,
+        string $campus,
+        string $cidade,
+        string $apresentacao,
+        array $habilidades
+    ) {
+        if (count($habilidades) < 5) {
+            throw new Exception('O perfil precisa de pelo menos 5 habilidades.');
+        }
+
+        $this->nome = $nome;
+        $this->curso = $curso;
+        $this->campus = $campus;
+        $this->cidade = $cidade;
+        $this->apresentacao = $apresentacao;
+        $this->habilidades = $habilidades;
+        $this->projetos = [];
+    }
+
+    public function adicionarProjeto(Projeto $projeto): void
+    {
+        $this->projetos[count($this->projetos) + 1] = $projeto;
+    }
+
+    public function getProjeto(int $id): Projeto
+    {
+        if (!isset($this->projetos[$id])) {
+            throw new Exception('Projeto não encontrado.');
+        }
+
+        return $this->projetos[$id];
+    }
+
+    public function getNome(): string
+    {
+        return $this->nome;
+    }
+
+    public function getCurso(): string
+    {
+        return $this->curso;
+    }
+
+    public function getCampus(): string
+    {
+        return $this->campus;
+    }
+
+    public function getCidade(): string
+    {
+        return $this->cidade;
+    }
+
+    public function getApresentacao(): string
+    {
+        return $this->apresentacao;
+    }
+
+    public function getHabilidades(): array
+    {
+        return $this->habilidades;
+    }
+
+    public function getProjetos(): array
+    {
+        return $this->projetos;
+    }
+
+    public function paraArray(): array
+    {
+        $projetosArray = [];
+        foreach ($this->projetos as $id => $projeto) {
+            $projetosArray[$id] = $projeto->paraArray();
+        }
+
+        return [
+            'perfil' => [
+                'nome' => $this->nome,
+                'curso' => $this->curso,
+                'campus' => $this->campus,
+                'cidade' => $this->cidade,
+                'apresentacao' => $this->apresentacao,
+                'habilidades' => $this->habilidades,
+            ],
+            'projetos' => $projetosArray,
+        ];
+    }
+}
+
+// 2. Os objetos (new Perfil, new Projeto, adicionarProjeto)
+$perfil = new Perfil(
+    'Ivamilton Júnior',
+    'Tecnologia em Análise e Desenvolvimento de Sistemas',
+    'IFCE Campus Boa Viagem',
+    'Boa Viagem - CE',
+    'Desenvolvedor em formação no curso de Análise e Desenvolvimento de Sistemas, com foco na criação de aplicações web modernas, acessíveis e orientadas a problemas reais. Tenho interesse em transformar ideias em produtos digitais funcionais, unindo boas práticas de frontend, backend e organização de projetos.',
+    [
         'HTML5',
         'CSS3',
         'JavaScript',
@@ -64,25 +165,28 @@ $perfil = [
         'Bootstrap',
         'APIs REST'
     ]
-];
+);
 
-$projetos = [
-    1 => [
-        'titulo' => 'Leite do Futuro',
-        'descricao' => 'Plataforma para modernizar a gestão da cadeia produtiva leiteira no semiárido cearense. Reúne dados de ordenha, sanidade do rebanho, custos e produtividade em uma experiência simples para apoiar decisões no campo.',
-        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
-    ],
-    2 => [
-        'titulo' => 'Aprende Mamis',
-        'descricao' => 'Plataforma educacional pensada para apoiar mães em sua jornada de aprendizagem. Oferece conteúdos organizados, trilhas de estudo, atividades interativas e acompanhamento da evolução de cada estudante.',
-        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
-    ],
-    3 => [
-        'titulo' => 'Plataforma de Estudos para Concursos',
-        'descricao' => 'Aplicação para planejar e otimizar a preparação para concursos públicos. Inclui banco de questões, simulados, ciclo de revisões e indicadores de desempenho por disciplina para tornar os estudos mais consistentes.',
-        'tecnologias' => 'React, Python, APIs REST, PostgreSQL'
-    ]
-];
+$perfil->adicionarProjeto(new Projeto(
+    'Leite do Futuro',
+    'Plataforma para modernizar a gestão da cadeia produtiva leiteira no semiárido cearense. Reúne dados de ordenha, sanidade do rebanho, custos e produtividade em uma experiência simples para apoiar decisões no campo.',
+    'React, Python, APIs REST, PostgreSQL'
+));
+
+$perfil->adicionarProjeto(new Projeto(
+    'Aprende Mamis',
+    'Plataforma educacional pensada para apoiar mães em sua jornada de aprendizagem. Oferece conteúdos organizados, trilhas de estudo, atividades interativas e acompanhamento da evolução de cada estudante.',
+    'React, Python, APIs REST, PostgreSQL'
+));
+
+$perfil->adicionarProjeto(new Projeto(
+    'Plataforma de Estudos para Concursos',
+    'Aplicação para planejar e otimizar a preparação para concursos públicos. Inclui banco de questões, simulados, ciclo de revisões e indicadores de desempenho por disciplina para tornar os estudos mais consistentes.',
+    'React, Python, APIs REST, PostgreSQL'
+));
+
+// Compatibilidade temporária para $projetos enquanto o HTML/404 não são refatorados nos próximos passos
+$projetos = $perfil->getProjetos();
 
 // 2. Tema claro ou escuro (GET, cookie, validação)
 // Prioridade: o que veio na URL; depois, o cookie; por fim, o padrão

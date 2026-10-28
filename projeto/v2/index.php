@@ -213,15 +213,16 @@ if (isset($_GET['formato']) && $_GET['formato'] === 'json') {
 // 4. Qual página mostrar (if/elseif, status 404)
 $pagina = $_GET['pagina'] ?? 'inicio';
 $id_projeto = null;
-$projeto_encontrado = null;
+$projetoAtual = null;
 $mensagem_erro_404 = null;
 
 if ($pagina === 'inicio' || $pagina === 'habilidades' || $pagina === 'projetos') {
     // Rotas principais válidas
 } elseif ($pagina === 'projeto') {
     $id_projeto = (int)($_GET['id'] ?? 0);
+    $projetos = $perfil->getProjetos();
     if (isset($projetos[$id_projeto])) {
-        $projeto_encontrado = $projetos[$id_projeto];
+        $projetoAtual = $projetos[$id_projeto];
     } else {
         http_response_code(404);
         $mensagem_erro_404 = 'Projeto não encontrado';
@@ -240,7 +241,7 @@ $link_troca_tema = "?{$param_pagina}&tema={$proximo_tema}";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Estudante - <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></title>
+    <title>Perfil do Estudante - <?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="estilo.css">
@@ -271,8 +272,8 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
     <header class="cabecalho">
         <div class="container container-header">
             <div class="identificacao">
-                <h1><?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></h1>
-                <p class="subtitulo"><?= htmlspecialchars($perfil['curso'], ENT_QUOTES, 'UTF-8') ?> &bull; <?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?></p>
+                <h1><?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></h1>
+                <p class="subtitulo"><?= htmlspecialchars($perfil->getCurso(), ENT_QUOTES, 'UTF-8') ?> &bull; <?= htmlspecialchars($perfil->getCampus(), ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <nav class="menu">
                 <a href="?pagina=inicio" class="<?= $pagina === 'inicio' ? 'ativo' : '' ?>">Início</a>
@@ -292,13 +293,13 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
                 <div class="hero-inner">
                     <div class="hero-avatar"><?= $ico_grad ?></div>
                     <div class="hero-text">
-                        <h2><?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></h2>
-                        <p class="hero-bio"><?= htmlspecialchars($perfil['apresentacao'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <h2><?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></h2>
+                        <p class="hero-bio"><?= htmlspecialchars($perfil->getApresentacao(), ENT_QUOTES, 'UTF-8') ?></p>
                         <div class="hero-tags">
-                            <span class="hero-tag"><?= $ico_mappin ?> <?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?></span>
-                            <span class="hero-tag"><?= $ico_building ?> <?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?></span>
-                            <span class="hero-tag"><?= $ico_code ?> <?= count($perfil['habilidades']) ?> habilidades</span>
-                            <span class="hero-tag"><?= $ico_rocket ?> <?= count($projetos) ?> projetos</span>
+                            <span class="hero-tag"><?= $ico_mappin ?> <?= htmlspecialchars($perfil->getCidade(), ENT_QUOTES, 'UTF-8') ?></span>
+                            <span class="hero-tag"><?= $ico_building ?> <?= htmlspecialchars($perfil->getCampus(), ENT_QUOTES, 'UTF-8') ?></span>
+                            <span class="hero-tag"><?= $ico_code ?> <?= count($perfil->getHabilidades()) ?> habilidades</span>
+                            <span class="hero-tag"><?= $ico_rocket ?> <?= count($perfil->getProjetos()) ?> projetos</span>
                         </div>
                     </div>
                 </div>
@@ -313,19 +314,19 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
                 <div class="info-grid">
                     <div class="info-item">
                         <strong>Nome</strong>
-                        <span><?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span><?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
                         <strong>Curso</strong>
-                        <span><?= htmlspecialchars($perfil['curso'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span><?= htmlspecialchars($perfil->getCurso(), ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
                         <strong>Campus</strong>
-                        <span><?= htmlspecialchars($perfil['campus'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span><?= htmlspecialchars($perfil->getCampus(), ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                     <div class="info-item">
                         <strong>Cidade</strong>
-                        <span><?= htmlspecialchars($perfil['cidade'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span><?= htmlspecialchars($perfil->getCidade(), ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                 </div>
             </section>
@@ -334,13 +335,13 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
             <section class="card habilidades">
                 <h2><span class="icon"><?= $ico_zap ?></span> Minhas Habilidades</h2>
                 <p class="resumo-habilidades">
-                    Atualmente possuo <strong><?= count($perfil['habilidades']) ?></strong> habilidades mapeadas:
+                    Atualmente possuo <strong><?= count($perfil->getHabilidades()) ?></strong> habilidades mapeadas:
                 </p>
                 <p class="texto-habilidades">
-                    <strong>Destaque:</strong>&nbsp;<?= htmlspecialchars(implode(' · ', $perfil['habilidades']), ENT_QUOTES, 'UTF-8') ?>
+                    <strong>Destaque:</strong>&nbsp;<?= htmlspecialchars(implode(' · ', $perfil->getHabilidades()), ENT_QUOTES, 'UTF-8') ?>
                 </p>
                 <div class="skills-grid">
-                    <?php foreach ($perfil['habilidades'] as $hab): ?>
+                    <?php foreach ($perfil->getHabilidades() as $hab): ?>
                         <div class="skill-tag"><?= $ico_tag ?><?= htmlspecialchars($hab, ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endforeach; ?>
                 </div>
@@ -351,32 +352,32 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
                 <h2><span class="icon"><?= $ico_grid ?></span> Meus Projetos</h2>
                 <p>Confira abaixo os principais projetos desenvolvidos e em andamento:</p>
                 <div class="projetos-grid">
-                    <?php foreach ($projetos as $id => $proj): ?>
+                    <?php foreach ($perfil->getProjetos() as $id => $proj): ?>
                         <article class="card-projeto">
                             <span class="card-projeto-numero">Projeto #<?= $id ?></span>
-                            <h3><?= htmlspecialchars($proj['titulo'], ENT_QUOTES, 'UTF-8') ?></h3>
-                            <p class="descricao-curta"><?= htmlspecialchars($proj['descricao'], ENT_QUOTES, 'UTF-8') ?></p>
-                            <span class="tecnologias-tag"><?= $ico_tag ?> <?= htmlspecialchars($proj['tecnologias'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <h3><?= htmlspecialchars($proj->getTitulo(), ENT_QUOTES, 'UTF-8') ?></h3>
+                            <p class="descricao-curta"><?= htmlspecialchars($proj->getDescricao(), ENT_QUOTES, 'UTF-8') ?></p>
+                            <span class="tecnologias-tag"><?= $ico_tag ?> <?= htmlspecialchars($proj->getTecnologias(), ENT_QUOTES, 'UTF-8') ?></span>
                             <a href="?pagina=projeto&id=<?= $id ?>" class="btn-link">Ver detalhes <?= $ico_arrow_right ?></a>
                         </article>
                     <?php endforeach; ?>
                 </div>
             </section>
 
-        <?php elseif ($pagina === 'projeto' && $projeto_encontrado !== null): ?>
+        <?php elseif ($pagina === 'projeto' && $projetoAtual !== null): ?>
             <article class="card projeto-detalhe">
                 <div class="breadcrumb">
                     <a href="?pagina=projetos" class="btn-voltar"><?= $ico_arrow_left ?> Voltar para Projetos</a>
                 </div>
-                <h2><?= htmlspecialchars($projeto_encontrado['titulo'], ENT_QUOTES, 'UTF-8') ?></h2>
+                <h2><?= htmlspecialchars($projetoAtual->getTitulo(), ENT_QUOTES, 'UTF-8') ?></h2>
                 <div class="projeto-info-completa">
                     <div class="bloco-texto">
                         <h3>Descrição do Projeto</h3>
-                        <p class="projeto-descricao-detalhada"><?= htmlspecialchars($projeto_encontrado['descricao'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <p class="projeto-descricao-detalhada"><?= htmlspecialchars($projetoAtual->getDescricao(), ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="bloco-tecnologias">
                         <h3>Tecnologias Empregadas</h3>
-                        <p class="tecnologias-tag"><?= $ico_tag ?> <?= htmlspecialchars($projeto_encontrado['tecnologias'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <p class="tecnologias-tag"><?= $ico_tag ?> <?= htmlspecialchars($projetoAtual->getTecnologias(), ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                 </div>
             </article>
@@ -397,7 +398,7 @@ $ico_grad = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" view
         <div class="container container-rodape">
             <p>Tema atual: <strong><?= $tema === 'escuro' ? 'Escuro' : 'Claro' ?></strong></p>
             <p><a href="?formato=json" class="link-api" target="_blank"><?= $ico_json ?> Versão JSON (API)</a></p>
-            <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($perfil['nome'], ENT_QUOTES, 'UTF-8') ?>. Todos os direitos reservados.</p>
+            <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($perfil->getNome(), ENT_QUOTES, 'UTF-8') ?>. Todos os direitos reservados.</p>
         </div>
     </footer>
 </body>
